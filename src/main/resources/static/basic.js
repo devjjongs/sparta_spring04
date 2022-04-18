@@ -1,4 +1,4 @@
-let targetId;
+let targetId;   // 관심 상품의 가격 설정을 위해 필요
 
 $(document).ready(function () {
     // id 가 query 인 녀석 위에서 엔터를 누르면 execSearch() 함수를 실행하라는 뜻입니다.
@@ -103,9 +103,23 @@ function addProduct(itemDto) {
      * 1. contentType: "application/json",
      * 2. data: JSON.stringify(itemDto),
      */
-    // 1. POST /api/products 에 관심 상품 생성 요청
+    // console.log(itemDto);
+    // console.log(JSON.stringify(itemDto));
 
+    // 1. POST /api/products 에 관심 상품 생성 요청
+    $.ajax({
+        type: 'POST',
+        url: "/api/products",
+        data: JSON.stringify(itemDto),
+        contentType: "application/json",
+        success: function (response) {
+            // console.log(response);
+            $('#container').addClass('active');
+            targetId = response.id;
+        }
+    })
     // 2. 응답 함수에서 modal을 뜨게 하고, targetId 를 reponse.id 로 설정 (숙제로 myprice 설정하기 위함)
+
 }
 
 function showProduct() {
