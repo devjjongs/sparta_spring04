@@ -139,8 +139,6 @@ function showProduct() {
             }
         }
     })
-    // 2. 관심상품 목록, 검색결과 목록 비우기
-    // 3. for 문마다 관심 상품 HTML 만들어서 관심상품 목록에 붙이기!
 }
 
 function addProductItem(product) {
@@ -177,4 +175,24 @@ function setMyprice() {
      * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
      * 6. 창을 새로고침한다. window.location.reload();
      */
+        // 1. id가 myprice 인 input 태그에서 값을 가져온다.
+    let myprice = $('#myprice').val()
+
+    // 2. 만약 값을 입력하지 않았으면 alert를 띄우고 중단한다.
+    if (myprice == '') {
+        alert("값을 입력해 주세요");
+        return;
+    }
+    $.ajax({
+        type: "PUT",
+        url: `/api/products/${targetId}`,
+        data: {'myprice': myprice},
+        contentType: "application/json",
+        data: JSON.stringify({myprice: myprice}),
+        success: function (response) {
+            $('#container').removeClass('active');
+            alert("관심 가격 설정");
+            window.location.reload();
+        }
+    })
 }
